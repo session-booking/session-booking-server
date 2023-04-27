@@ -2,7 +2,6 @@ import * as bodyParser from "body-parser";
 import {SessionController} from "./controller/session.controller";
 import {APILogger} from "./logger/api.logger";
 import {config} from "dotenv";
-import * as path from "path";
 import {Application} from "express";
 
 const cors = require("cors");
@@ -21,7 +20,6 @@ class App {
 
         this.sessionRoutes();
         this.loggerRoutes();
-        this.catchAllRoute();
 
         this.logger = new APILogger();
         this.sessionController = new SessionController();
@@ -31,9 +29,6 @@ class App {
         this.express.use(cors({origin: "*"}));
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({extended: false}));
-
-        // Serve static React files
-        this.express.use(express.static(path.join(__dirname, '../../client/dist')));
     }
 
     private sessionRoutes(): void {
@@ -74,12 +69,6 @@ class App {
         this.express.post("/api/logger/error", (req, res) => {
             this.logger.error(req.body.message, req.body.data);
             res.json({message: "success"});
-        });
-    }
-
-    private catchAllRoute(): void {
-        this.express.get('*', (req, res) => {
-            res.sendFile(path.join(__dirname, '../../client/dist', 'index.html'));
         });
     }
 

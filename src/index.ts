@@ -7,8 +7,6 @@ config();
 
 const port = process.env.PORT || 5001;
 
-process.env.API_URL = `${process.env.ENDPOINT}:${port}`
-
 App.set('port', port);
 const server = http.createServer(App);
 server.listen(port);
