@@ -64,9 +64,6 @@ export class UserRepository {
                 };
             }
 
-            this.logger.info('existingUser password::' + existingUser.password, null);
-            this.logger.info('user password::' + user.password, null);
-
             if (existingUser.password !== user.password) {
                 return {
                     message: 'invalid password',
@@ -77,7 +74,6 @@ export class UserRepository {
             const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
             const payload = {
                 id: existingUser.id,
-                email: existingUser.email,
             }
 
             return {
@@ -90,6 +86,37 @@ export class UserRepository {
                     phone_number: existingUser.phone_number,
                 },
                 token: jwt.sign(payload, JWT_SECRET_KEY, {expiresIn: '30d'}),
+            }
+        } catch (error) {
+            this.logger.error('error::' + error, null);
+            throw error;
+        }
+    }
+
+    async getUser(userId: string) {
+        try {
+            const user = await this.userRepository.findOne({
+                where: {
+                    id: userId,
+                }
+            });
+
+            if (!user) {
+                return {
+                    message: 'user not found',
+                    httpCode: 404,
+                };
+            }
+
+            return {
+                message: 'user authorized',
+                httpCode: 200,
+                user: {
+                    id: user.id,
+                    username: user.username,
+                    email: user.email,
+                    phone_number: user.phone_number,
+                }
             }
         } catch (error) {
             this.logger.error('error::' + error, null);

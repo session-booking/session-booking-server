@@ -3,6 +3,7 @@ import {SessionController} from "./controller/session.controller";
 import {APILogger} from "./logger/api.logger";
 import {config} from "dotenv";
 import {Application} from "express";
+import jwt from 'jsonwebtoken';
 
 const cors = require("cors");
 const express = require("express");
@@ -106,6 +107,41 @@ class App {
                     this.logger.error("error::" + error, null);
                     res.status(500).json({message: error.message});
                 });
+        });
+
+        this.express.get("/api/user" , (req, res) => {
+            const token = req.headers['authorization'];
+
+            if (!token) {
+                return res.status(403).send({
+                    message: 'no token provided',
+                    httpCode: 403,
+                });
+            }
+
+            const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+
+            jwt.verify(token, JWT_SECRET_KEY, (err: any, decoded: any) => {
+                if (err) {
+                    return res.status(401).send({
+                        message: 'unauthorized access',
+                        httpCode: 401,
+                    });
+                }
+
+                this.userController
+                    .getUser(decoded.id)
+                    .then(
+                        (data) =>
+                            (data.hasOwnProperty("httpCode"))
+                            ? res.status(data.httpCode).json(data)
+                            : res.json(data)
+                    )
+                    .catch((error) => {
+                        this.logger.error("error::" + error, null);
+                        res.status(500).json({message: error.message});
+                    });
+            });
         });
     }
 

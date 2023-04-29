@@ -20,6 +20,11 @@ export class UserController {
         return await this.userService.login(user);
     }
 
+    async getUser(userId: string) {
+        this.logger.info('controller: getUser', userId);
+        return await this.userService.getUser(userId);
+    }
+
     async updateUser(user: any) {
         this.logger.info('controller: updateUser', user);
         return await this.userService.updateUser(user);

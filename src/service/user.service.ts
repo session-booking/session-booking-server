@@ -16,6 +16,10 @@ export class UserService {
         return await this.userRepository.login(user);
     }
 
+    async getUser(userId: string) {
+        return await this.userRepository.getUser(userId);
+    }
+
     async updateUser(user: User) {
         return await this.userRepository.updateUser(user);
     }
