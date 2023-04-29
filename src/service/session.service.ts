@@ -1,5 +1,5 @@
-import { session } from "../model/session.model";
-import { SessionRepository } from "../repository/session.repository";
+import {Session} from "../model/session.model";
+import {SessionRepository} from "../repository/session.repository";
 
 export class SessionService {
     private sessionRepository: SessionRepository;
@@ -12,11 +12,11 @@ export class SessionService {
         return await this.sessionRepository.getSessions();
     }
 
-    async createSession(session: session) {
+    async createSession(session: Session) {
         return await this.sessionRepository.createSession(session);
     }
 
-    async updateSession(session: session) {
+    async updateSession(session: Session) {
         return await this.sessionRepository.updateSession(session);
     }
 

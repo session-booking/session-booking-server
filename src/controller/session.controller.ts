@@ -1,6 +1,6 @@
-import { APILogger } from "../logger/api.logger";
-import { session } from "../model/session.model";
-import { SessionService } from "../service/session.service";
+import {APILogger} from "../logger/api.logger";
+import {Session} from "../model/session.model";
+import {SessionService} from "../service/session.service";
 
 export class SessionController {
     private sessionService: SessionService;
@@ -16,12 +16,12 @@ export class SessionController {
         return await this.sessionService.getSessions();
     }
 
-    async createSession(session: session) {
+    async createSession(session: Session) {
         this.logger.info('controller: createSession', session);
         return await this.sessionService.createSession(session);
     }
 
-    async updateSession(session: session) {
+    async updateSession(session: Session) {
         this.logger.info('controller: updateSession', session);
         return await this.sessionService.updateSession(session);
     }
@@ -30,5 +30,5 @@ export class SessionController {
         this.logger.info('controller: deleteSession', sessionId);
         return await this.sessionService.deleteSession(sessionId);
     }
-    
+
 }

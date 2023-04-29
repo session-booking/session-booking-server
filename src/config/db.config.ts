@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
-import { session } from "../model/session.model";
+import { Session } from "../model/session.model";
+import {User} from "../model/user.model";
 
 export const connect = () => {
     const host = process.env.POSTGRES_HOST;
@@ -41,7 +42,7 @@ export const connect = () => {
         }
     });
 
-    sequelize.addModels([session]);
+    sequelize.addModels([Session, User]);
 
     const db: any = {};
     db.Sequelize = Sequelize;
