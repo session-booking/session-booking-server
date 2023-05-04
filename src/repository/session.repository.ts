@@ -13,9 +13,13 @@ export class SessionRepository {
         this.sessionRepository = this.db.sequelize.getRepository(Session)
     }
 
-    async getSessions() {
+    async getSessions(userId: number) {
         try {
-            const sessions = await this.sessionRepository.findAll();
+            const sessions = await this.sessionRepository.findAll({
+                where: {
+                    userId: userId,
+                }
+            });
             this.logger.info('sessions:::', sessions);
             return sessions;
         } catch (error) {

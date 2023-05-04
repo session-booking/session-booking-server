@@ -1,9 +1,10 @@
-import { Column, Model, Table } from "sequelize-typescript";
+import {Column, HasMany, Model, Table} from "sequelize-typescript";
+import {Session} from "./session.model";
 
 @Table
 export class User extends Model {
 
-    @Column
+    @Column({field: 'username'})
     get username(): string {
         return this.getDataValue("username");
     }
@@ -12,7 +13,7 @@ export class User extends Model {
         this.setDataValue("username", value);
     }
 
-    @Column
+    @Column({field: 'email'})
     get email(): string {
         return this.getDataValue("email");
     }
@@ -21,16 +22,16 @@ export class User extends Model {
         this.setDataValue("email", value);
     }
 
-    @Column
-    get phone_number(): string {
-        return this.getDataValue("phone_number");
+    @Column({field: 'phone_number'})
+    get phoneNumber(): string {
+        return this.getDataValue("phoneNumber");
     }
 
-    set phone_number(value: string) {
-        this.setDataValue("phone_number", value);
+    set phoneNumber(value: string) {
+        this.setDataValue("phoneNumber", value);
     }
 
-    @Column
+    @Column({field: 'password'})
     get password(): string {
         return this.getDataValue("password");
     }
@@ -38,5 +39,8 @@ export class User extends Model {
     set password(value: string) {
         this.setDataValue("password", value);
     }
+
+    @HasMany(() => Session)
+    sessions: Session[];
 
 }

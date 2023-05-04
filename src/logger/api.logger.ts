@@ -15,17 +15,17 @@ export class APILogger {
     }
 
     info(message: any, data: any) {
-        const dataText = (data !== null) ? `${JSON.stringify(data)}` : '';
+        const dataText = (data !== null) ? `, data::${JSON.stringify(data)}` : '';
         this.logger.info(`${message}` + dataText);
     }
 
     warn(message: any, data: any) {
-        const dataText = (data !== null) ? `${JSON.stringify(data)}` : '';
+        const dataText = (data !== null) ? `, data::${JSON.stringify(data)}` : '';
         this.logger.warn(`${message}` + dataText);
     }
 
     error(message: any, data: any) {
-        const dataText = (data !== null) ? `${JSON.stringify(data)}` : '';
+        const dataText = (data !== null) ? `, data::${JSON.stringify(data)}` : '';
         this.logger.error(`${message}` + dataText);
     }
 

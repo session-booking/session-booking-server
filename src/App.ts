@@ -1,9 +1,6 @@
 import * as bodyParser from "body-parser";
-import {SessionController} from "./controller/session.controller";
-import {APILogger} from "./logger/api.logger";
 import {config} from "dotenv";
 import {Application} from "express";
-import jwt from 'jsonwebtoken';
 
 const cors = require("cors");
 const express = require("express");
@@ -13,27 +10,18 @@ const express = require("express");
 })();
 
 import "./sync/db.sync";
-import {UserController} from "./controller/user.controller";
+import sessionRoutes from "../routes/session.routes";
+import userRoutes from "../routes/user.routes";
+import loggerRoutes from "../routes/logger.routes";
 
 class App {
 
     public express: Application;
-    public logger: APILogger;
-    public sessionController: SessionController;
-    public userController: UserController;
 
     constructor() {
         this.express = express();
-
         this.middleware();
-
-        this.sessionRoutes();
-        this.userRoutes();
-        this.loggerRoutes();
-
-        this.logger = new APILogger();
-        this.sessionController = new SessionController();
-        this.userController = new UserController();
+        this.routes();
     }
 
     private middleware(): void {
@@ -42,124 +30,10 @@ class App {
         this.express.use(bodyParser.urlencoded({extended: false}));
     }
 
-    private sessionRoutes(): void {
-        this.express.get("/api/sessions", (req, res) => {
-            this.sessionController.getSessions().then((data) => res.json(data));
-        });
-
-        this.express.post("/api/session", (req, res) => {
-            this.sessionController
-                .createSession(req.body.session)
-                .then((data) => res.json(data))
-                .catch((error) => {
-                    this.logger.error("error::" + error, null);
-                    res.status(500).json({message: error.message});
-                });
-        });
-
-        this.express.put("/api/session", (req, res) => {
-            this.sessionController
-                .updateSession(req.body.session)
-                .then((data) => res.json(data))
-                .catch((error) => {
-                    this.logger.error("error::" + error, null);
-                    res.status(500).json({message: error.message});
-                });
-        });
-
-        this.express.delete("/api/session/:id", (req, res) => {
-            this.sessionController
-                .deleteSession(req.params.id)
-                .then((data) => res.json(data))
-                .catch((error) => {
-                    this.logger.error("error::" + error, null);
-                    res.status(500).json({message: error.message});
-                });
-        });
-    }
-
-    private userRoutes(): void {
-        this.express.post("/api/user/register", (req, res) => {
-            this.userController
-                .register(req.body.user)
-                .then(
-                    (data) =>
-                        (data.hasOwnProperty("httpCode"))
-                        ? res.status(data.httpCode).json(data)
-                        : res.json(data)
-                )
-                .catch((error) => {
-                    this.logger.error("error::" + error, null);
-                    res.status(500).json({message: error.message});
-                });
-        });
-
-        this.express.post("/api/user/login", (req, res) => {
-            this.userController
-                .login(req.body.user)
-                .then(
-                    (data) =>
-                        (data.hasOwnProperty("httpCode"))
-                        ? res.status(data.httpCode).json(data)
-                        : res.json(data)
-                )
-                .catch((error) => {
-                    this.logger.error("error::" + error, null);
-                    res.status(500).json({message: error.message});
-                });
-        });
-
-        this.express.get("/api/user" , (req, res) => {
-            const token = req.headers['authorization'];
-
-            if (!token) {
-                return res.status(403).send({
-                    message: 'no token provided',
-                    httpCode: 403,
-                });
-            }
-
-            const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
-
-            jwt.verify(token, JWT_SECRET_KEY, (err: any, decoded: any) => {
-                if (err) {
-                    return res.status(401).send({
-                        message: 'unauthorized access',
-                        httpCode: 401,
-                    });
-                }
-
-                this.userController
-                    .getUser(decoded.id)
-                    .then(
-                        (data) =>
-                            (data.hasOwnProperty("httpCode"))
-                            ? res.status(data.httpCode).json(data)
-                            : res.json(data)
-                    )
-                    .catch((error) => {
-                        this.logger.error("error::" + error, null);
-                        res.status(500).json({message: error.message});
-                    });
-            });
-        });
-    }
-
-    private loggerRoutes(): void {
-        this.express.post("/api/logger/info", (req, res) => {
-            this.logger.info(req.body.message, req.body.data);
-            res.json({message: "success"});
-        });
-
-        this.express.post("/api/logger/warn", (req, res) => {
-            this.logger.warn(req.body.message, req.body.data);
-            res.json({message: "success"});
-        });
-
-        this.express.post("/api/logger/error", (req, res) => {
-            this.logger.error(req.body.message, req.body.data);
-            res.json({message: "success"});
-        });
+    private routes(): void {
+        this.express.use(sessionRoutes);
+        this.express.use(userRoutes);
+        this.express.use(loggerRoutes);
     }
 
 }

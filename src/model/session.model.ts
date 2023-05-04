@@ -1,9 +1,10 @@
-import { Table, Column, Model } from "sequelize-typescript";
+import {Table, Column, Model, ForeignKey, BelongsTo} from "sequelize-typescript";
+import {User} from "./user.model";
 
 @Table
 export class Session extends Model {
 
-    @Column
+    @Column({field: 'date'})
     get date(): Date {
         return this.getDataValue("date");
     }
@@ -12,7 +13,7 @@ export class Session extends Model {
         this.setDataValue("date", value);
     }
 
-    @Column
+    @Column({field: 'open'})
     get open(): boolean {
         return this.getDataValue("open");
     }
@@ -21,43 +22,43 @@ export class Session extends Model {
         this.setDataValue("open", value);
     }
 
-    @Column
-    get start_time(): string {
-        return this.getDataValue("start_time");
+    @Column({field: 'start_time'})
+    get startTime(): string {
+        return this.getDataValue("startTime");
     }
 
-    set start_time(value: string) {
-        this.setDataValue("start_time", value);
+    set startTime(value: string) {
+        this.setDataValue("startTime", value);
     }
 
-    @Column
-    get end_time(): string {
-        return this.getDataValue("end_time");
+    @Column({field: 'end_time'})
+    get endTime(): string {
+        return this.getDataValue("endTime");
     }
 
-    set end_time(value: string) {
-        this.setDataValue("end_time", value);
+    set endTime(value: string) {
+        this.setDataValue("endTime", value);
     }
 
-    @Column
-    get client_email(): string {
-        return this.getDataValue("client_email");
+    @Column({field: 'client_email'})
+    get clientEmail(): string {
+        return this.getDataValue("clientEmail");
     }
 
-    set client_email(value: string) {
-        this.setDataValue("client_email", value);
+    set clientEmail(value: string) {
+        this.setDataValue("clientEmail", value);
     }
 
-    @Column
-    get client_name(): string {
-        return this.getDataValue("client_name");
+    @Column({field: 'client_name'})
+    get clientName(): string {
+        return this.getDataValue("clientName");
     }
 
-    set client_name(value: string) {
-        this.setDataValue("client_name", value);
+    set clientName(value: string) {
+        this.setDataValue("clientName", value);
     }
 
-    @Column
+    @Column({field: 'color'})
     get color(): string {
         return this.getDataValue("color");
     }
@@ -65,5 +66,12 @@ export class Session extends Model {
     set color(value: string) {
         this.setDataValue("color", value);
     }
+
+    @ForeignKey(() => User)
+    @Column
+    userId: number;
+
+    @BelongsTo(() => User)
+    user: User;
 
 }

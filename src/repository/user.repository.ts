@@ -83,7 +83,7 @@ export class UserRepository {
                     id: existingUser.id,
                     username: existingUser.username,
                     email: existingUser.email,
-                    phone_number: existingUser.phone_number,
+                    phoneNumber: existingUser.phoneNumber,
                 },
                 token: jwt.sign(payload, JWT_SECRET_KEY, {expiresIn: '30d'}),
             }
@@ -115,7 +115,7 @@ export class UserRepository {
                     id: user.id,
                     username: user.username,
                     email: user.email,
-                    phone_number: user.phone_number,
+                    phoneNumber: user.phoneNumber,
                 }
             }
         } catch (error) {

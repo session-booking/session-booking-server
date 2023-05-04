@@ -8,8 +8,8 @@ export class SessionService {
         this.sessionRepository = new SessionRepository();
     }
 
-    async getSessions() {
-        return await this.sessionRepository.getSessions();
+    async getSessions(userId: number) {
+        return await this.sessionRepository.getSessions(userId);
     }
 
     async createSession(session: Session) {

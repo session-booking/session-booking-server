@@ -10,8 +10,6 @@ export const connect = () => {
     const database = process.env.POSTGRES_DATABASE;
     const dialect: any = process.env.POSTGRES_DIALECT;
 
-    console.log(host);
-
     const operatorsAliases: any = false;
 
     const sequelize = new Sequelize(database, username, password, {
