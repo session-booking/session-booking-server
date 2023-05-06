@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {APILogger} from "../src/logger/api.logger";
+import {APILogger} from "../logger/api.logger";
 
 const router = Router();
 const logger = new APILogger();

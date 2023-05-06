@@ -1,8 +1,8 @@
 import {Router} from 'express';
-import {SessionController} from "../src/controller/session.controller";
-import {APILogger} from "../src/logger/api.logger";
-import {verifyToken} from "../src/middleware/verifyToken";
-import {CustomRequest} from "../src/interface/customRequest";
+import {SessionController} from "../controller/session.controller";
+import {APILogger} from "../logger/api.logger";
+import {verifyToken} from "../middleware/verifyToken";
+import {CustomRequest} from "../interface/customRequest";
 
 const router = Router();
 const sessionController = new SessionController();

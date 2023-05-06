@@ -10,9 +10,9 @@ const express = require("express");
 })();
 
 import "./sync/db.sync";
-import sessionRoutes from "../routes/session.routes";
-import userRoutes from "../routes/user.routes";
-import loggerRoutes from "../routes/logger.routes";
+import sessionRoutes from "./routes/session.routes";
+import userRoutes from "./routes/user.routes";
+import loggerRoutes from "./routes/logger.routes";
 
 class App {
 

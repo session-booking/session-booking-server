@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import jwt from 'jsonwebtoken';
-import {UserController} from "../src/controller/user.controller";
-import {APILogger} from "../src/logger/api.logger";
+import {UserController} from "../controller/user.controller";
+import {APILogger} from "../logger/api.logger";
 
 const router = Router();
 const userController = new UserController();
