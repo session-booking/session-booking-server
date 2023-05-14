@@ -10,7 +10,9 @@ const logger = new APILogger();
 
 router.get('/api/sessions', verifyToken, (req: CustomRequest, res) => {
     const userId = req.userId;
-    sessionController.getSessions(userId).then((data) => res.json(data));
+    const fromDate = req.query.from as string;
+    const toDate = req.query.to as string;
+    sessionController.getSessions(userId, fromDate, toDate).then((data) => res.json(data));
 });
 
 router.post('/api/session', verifyToken, (req: CustomRequest, res) => {

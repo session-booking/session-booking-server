@@ -11,9 +11,9 @@ export class SessionController {
         this.logger = new APILogger();
     }
 
-    async getSessions(userId: number) {
-        this.logger.info(`controller: getSessions(userId: ${userId}`, null)
-        return await this.sessionService.getSessions(userId);
+    async getSessions(userId: number, fromDate: string, toDate: string) {
+        this.logger.info(`controller: getSessions(userId: ${userId}`, {fromDate: fromDate, toDate: toDate});
+        return await this.sessionService.getSessions(userId, fromDate, toDate);
     }
 
     async createSession(session: Session) {

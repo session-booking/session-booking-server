@@ -1,7 +1,7 @@
 import * as http from 'http';
 import App from "./App";
-import { config } from "dotenv";
-import { APILogger } from './logger/api.logger';
+import {config} from "dotenv";
+import {APILogger} from './logger/api.logger';
 
 config();
 
@@ -13,7 +13,7 @@ server.listen(port);
 
 const logger = new APILogger();
 
-server.on('listening', function(): void {
+server.on('listening', function (): void {
     const addr = server.address();
     const bind = (typeof addr === "string") ? `pipe ${addr}` : `port ${addr.port}`;
     logger.info(`Listening on ${bind}`, null);

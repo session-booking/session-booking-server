@@ -1,6 +1,7 @@
 import {connect} from "../config/db.config";
 import {APILogger} from "../logger/api.logger";
 import {Session} from "../model/session.model";
+import {Op} from "sequelize";
 
 export class SessionRepository {
     private logger: APILogger;
@@ -13,11 +14,17 @@ export class SessionRepository {
         this.sessionRepository = this.db.sequelize.getRepository(Session)
     }
 
-    async getSessions(userId: number) {
+    async getSessions(userId: number, fromDate: string, toDate: string) {
         try {
+            const from = new Date(fromDate);
+            const to = new Date(toDate);
+
             const sessions = await this.sessionRepository.findAll({
                 where: {
                     userId: userId,
+                    date: {
+                        [Op.between]: [from, to]
+                    }
                 }
             });
             this.logger.info('sessions:::', sessions);

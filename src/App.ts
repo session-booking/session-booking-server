@@ -10,9 +10,11 @@ const express = require("express");
 })();
 
 import "./sync/db.sync";
+
 import sessionRoutes from "./routes/session.routes";
 import userRoutes from "./routes/user.routes";
 import loggerRoutes from "./routes/logger.routes";
+import timeSlotRoutes from "./routes/timeSlot.routes";
 
 class App {
 
@@ -34,6 +36,7 @@ class App {
         this.express.use(sessionRoutes);
         this.express.use(userRoutes);
         this.express.use(loggerRoutes);
+        this.express.use(timeSlotRoutes);
     }
 
 }
