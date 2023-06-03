@@ -12,22 +12,22 @@ export class SessionController {
     }
 
     async getSessions(userId: number, fromDate: string, toDate: string) {
-        this.logger.info(`controller: getSessions(userId: ${userId}`, {fromDate: fromDate, toDate: toDate});
+        this.logger.info(`controller: getSessions(userId: ${userId})`, {fromDate: fromDate, toDate: toDate});
         return await this.sessionService.getSessions(userId, fromDate, toDate);
     }
 
     async createSession(session: Session) {
-        this.logger.info('controller: createSession', session);
+        this.logger.info('controller: createSession', {data: session});
         return await this.sessionService.createSession(session);
     }
 
     async updateSession(session: Session) {
-        this.logger.info('controller: updateSession', session);
+        this.logger.info('controller: updateSession', {data: session});
         return await this.sessionService.updateSession(session);
     }
 
     async deleteSession(sessionId: string) {
-        this.logger.info('controller: deleteSession', sessionId);
+        this.logger.info(`controller: deleteSession(sessionId: ${sessionId})`, null);
         return await this.sessionService.deleteSession(sessionId);
     }
 

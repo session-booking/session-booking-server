@@ -15,9 +15,9 @@ import sessionRoutes from "./routes/session.routes";
 import userRoutes from "./routes/user.routes";
 import loggerRoutes from "./routes/logger.routes";
 import timeSlotRoutes from "./routes/timeSlot.routes";
+import serviceRoutes from "./routes/service.routes";
 
 class App {
-
     public express: Application;
 
     constructor() {
@@ -37,6 +37,7 @@ class App {
         this.express.use(userRoutes);
         this.express.use(loggerRoutes);
         this.express.use(timeSlotRoutes);
+        this.express.use(serviceRoutes);
     }
 
 }
