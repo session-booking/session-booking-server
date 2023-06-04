@@ -11,7 +11,7 @@ export class TimeSlotController {
         this.logger = new APILogger();
     }
 
-    async getTimeSlots(userId: number, fromDate: string, toDate: string) {
+    async getTimeSlots(userId: string, fromDate: string, toDate: string) {
         this.logger.info(`controller: getTimeSlots(userId: ${userId})`, {fromDate: fromDate, toDate: toDate});
         return await this.timeSlotService.getTimeSlots(userId, fromDate, toDate);
     }

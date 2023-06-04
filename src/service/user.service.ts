@@ -28,4 +28,8 @@ export class UserService {
         return await this.userRepository.deleteUser(userId);
     }
 
+    async checkUser(userId: string) {
+        return await this.userRepository.checkUser(userId);
+    }
+
 }

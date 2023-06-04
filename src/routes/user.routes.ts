@@ -72,4 +72,19 @@ router.get('/api/user', (req, res) => {
     });
 });
 
+router.get('/api/user/:userId', (req, res) => {
+    userController
+        .checkUser(req.params.userId)
+        .then(
+            (data) =>
+                data.hasOwnProperty('httpCode')
+                    ? res.status(data.httpCode).json(data)
+                    : res.json(data)
+        )
+        .catch((error) => {
+            logger.error('error::' + error, null);
+            res.status(500).json({message: error.message});
+        });
+});
+
 export default router;

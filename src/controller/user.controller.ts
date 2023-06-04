@@ -36,4 +36,9 @@ export class UserController {
         return await this.userService.deleteUser(userId);
     }
 
+    async checkUser(userId: string) {
+        this.logger.info(`controller: checkUser(userId: ${userId})`, null);
+        return await this.userService.checkUser(userId);
+    }
+
 }

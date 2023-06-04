@@ -109,7 +109,7 @@ export class UserRepository {
             }
 
             return {
-                message: 'user authorized',
+                message: 'user exists',
                 httpCode: 200,
                 user: {
                     id: user.id,
@@ -152,6 +152,31 @@ export class UserRepository {
             throw error;
         }
         return data;
+    }
+
+    async checkUser(userId: string) {
+        try {
+            const user = await this.userRepository.findOne({
+                where: {
+                    id: userId,
+                }
+            });
+
+            if (!user) {
+                return {
+                    message: 'user not found',
+                    httpCode: 404,
+                };
+            }
+
+            return {
+                message: 'user exists',
+                httpCode: 200,
+            }
+        } catch (error) {
+            this.logger.error('error::' + error, null);
+            throw error;
+        }
     }
 
 }

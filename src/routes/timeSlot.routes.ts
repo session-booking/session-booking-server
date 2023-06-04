@@ -8,8 +8,8 @@ const router = Router();
 const timeSlotController = new TimeSlotController();
 const logger = new APILogger();
 
-router.get('/api/timeSlots', verifyToken, (req: CustomRequest, res) => {
-    const userId = req.userId;
+router.get('/api/timeSlots/:userId', (req, res) => {
+    const userId = req.params.userId
     const fromDate = req.query.from as string;
     const toDate = req.query.to as string;
     timeSlotController.getTimeSlots(userId, fromDate, toDate).then((data) => res.json(data));
