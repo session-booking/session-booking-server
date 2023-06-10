@@ -17,7 +17,7 @@ export class ServiceController {
     }
 
     async createService(service: Service) {
-        this.logger.info('controller: createService', {data: service});
+        this.logger.info('controller: createService', service);
         return await this.serviceService.createService(service);
     }
 

@@ -16,6 +16,7 @@ import userRoutes from "./routes/user.routes";
 import loggerRoutes from "./routes/logger.routes";
 import timeSlotRoutes from "./routes/timeSlot.routes";
 import serviceRoutes from "./routes/service.routes";
+import bookingRoutes from "./routes/booking.routes";
 
 class App {
     public express: Application;
@@ -38,6 +39,7 @@ class App {
         this.express.use(loggerRoutes);
         this.express.use(timeSlotRoutes);
         this.express.use(serviceRoutes);
+        this.express.use(bookingRoutes);
     }
 
 }

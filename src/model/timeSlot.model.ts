@@ -32,8 +32,14 @@ export class TimeSlot extends Model {
     }
 
     @ForeignKey(() => User)
-    @Column
-    userId: number;
+    @Column({field: 'user_id'})
+    get userId(): number {
+        return this.getDataValue('userId');
+    }
+
+    set userId(value: number) {
+        this.setDataValue('userId', value);
+    }
 
     @BelongsTo(() => User)
     user: User;

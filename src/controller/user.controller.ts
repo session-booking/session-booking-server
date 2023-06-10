@@ -12,12 +12,12 @@ export class UserController {
     }
 
     async register(user: User) {
-        this.logger.info('controller: register', {data: user});
+        this.logger.info('controller: register', user);
         return await this.userService.register(user);
     }
 
     async login(user: User) {
-        this.logger.info('controller: login', {data: user});
+        this.logger.info('controller: login', user);
         return await this.userService.login(user);
     }
 
@@ -27,7 +27,7 @@ export class UserController {
     }
 
     async updateUser(user: User) {
-        this.logger.info('controller: updateUser', {data: user});
+        this.logger.info('controller: updateUser', user);
         return await this.userService.updateUser(user);
     }
 

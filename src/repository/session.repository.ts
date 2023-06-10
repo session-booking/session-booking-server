@@ -27,6 +27,7 @@ export class SessionRepository {
                     }
                 }
             });
+
             this.logger.info('sessions:::', sessions);
             return sessions;
         } catch (error) {
@@ -41,7 +42,6 @@ export class SessionRepository {
             data = await this.sessionRepository.create(session);
         } catch (error) {
             this.logger.error('error::' + error, null);
-            throw error;
         }
         return data;
     }
@@ -56,7 +56,6 @@ export class SessionRepository {
             });
         } catch (error) {
             this.logger.error('error::' + error, null);
-            throw error;
         }
         return data;
     }
@@ -71,7 +70,6 @@ export class SessionRepository {
             });
         } catch (error) {
             this.logger.error('error::' + error, null);
-            throw error;
         }
         return data;
     }

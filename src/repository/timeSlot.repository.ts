@@ -14,7 +14,7 @@ export class TimeSlotRepository {
         this.timeSlotRepository = this.db.sequelize.getRepository(TimeSlot);
     }
 
-    async getTimeSlots(userId: string, fromDate: string, toDate: string) {
+    async getTimeSlotsByWeek(userId: string, fromDate: string, toDate: string) {
         try {
             const from = new Date(fromDate);
             const to = new Date(toDate);
@@ -27,6 +27,29 @@ export class TimeSlotRepository {
                     }
                 }
             });
+
+            this.logger.info('timeSlots:::', timeSlots);
+            return timeSlots;
+        } catch (error) {
+            this.logger.error('error::' + error, null);
+            return [];
+        }
+    }
+
+    async getTimeSlotsByDay(userId: string, date: string) {
+        try {
+            const startDateString = `${date}T00:00:00.000Z`;
+            const endDateString = `${date}T23:59:59.999Z`;
+
+            const timeSlots = await this.timeSlotRepository.findAll({
+                where: {
+                    userId: userId,
+                    date: {
+                        [Op.between]: [startDateString, endDateString]
+                    }
+                }
+            });
+
             this.logger.info('timeSlots:::', timeSlots);
             return timeSlots;
         } catch (error) {
@@ -41,7 +64,6 @@ export class TimeSlotRepository {
             data = await this.timeSlotRepository.create(timeSlot);
         } catch (error) {
             this.logger.error('error::' + error, null);
-            throw error;
         }
         return data;
     }
@@ -56,7 +78,6 @@ export class TimeSlotRepository {
             });
         } catch (error) {
             this.logger.error('error::' + error, null);
-            throw error;
         }
         return data;
     }

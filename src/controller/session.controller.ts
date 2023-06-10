@@ -17,12 +17,12 @@ export class SessionController {
     }
 
     async createSession(session: Session) {
-        this.logger.info('controller: createSession', {data: session});
+        this.logger.info('controller: createSession', session);
         return await this.sessionService.createSession(session);
     }
 
     async updateSession(session: Session) {
-        this.logger.info('controller: updateSession', {data: session});
+        this.logger.info('controller: updateSession', session);
         return await this.sessionService.updateSession(session);
     }
 

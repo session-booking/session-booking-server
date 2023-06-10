@@ -20,6 +20,7 @@ export class ServiceRepository {
                     userId: userId
                 }
             });
+
             this.logger.info('services:::', services);
             return services;
         } catch (error) {
@@ -34,7 +35,6 @@ export class ServiceRepository {
             data = await this.serviceRepository.create(service);
         } catch (error) {
             this.logger.error('error::' + error, null);
-            throw error;
         }
         return data;
     }
@@ -49,7 +49,6 @@ export class ServiceRepository {
             });
         } catch (error) {
             this.logger.error('error::' + error, null);
-            throw error;
         }
         return data;
     }

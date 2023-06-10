@@ -45,7 +45,6 @@ export class UserRepository {
             }
         } catch (error) {
             this.logger.error('error::' + error, null);
-            throw error;
         }
     }
 
@@ -89,7 +88,6 @@ export class UserRepository {
             }
         } catch (error) {
             this.logger.error('error::' + error, null);
-            throw error;
         }
     }
 
@@ -120,7 +118,6 @@ export class UserRepository {
             }
         } catch (error) {
             this.logger.error('error::' + error, null);
-            throw error;
         }
     }
 
@@ -134,7 +131,6 @@ export class UserRepository {
             });
         } catch (error) {
             this.logger.error('error::' + error, null);
-            throw error;
         }
         return data;
     }
@@ -149,7 +145,6 @@ export class UserRepository {
             });
         } catch (error) {
             this.logger.error('error::' + error, null);
-            throw error;
         }
         return data;
     }
@@ -175,7 +170,6 @@ export class UserRepository {
             }
         } catch (error) {
             this.logger.error('error::' + error, null);
-            throw error;
         }
     }
 

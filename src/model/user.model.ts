@@ -1,5 +1,8 @@
 import {Column, HasMany, Model, Table} from "sequelize-typescript";
 import {Session} from "./session.model";
+import {TimeSlot} from "./timeSlot.model";
+import {Service} from "./service.model";
+import {Booking} from "./booking.model";
 
 @Table
 export class User extends Model {
@@ -42,5 +45,14 @@ export class User extends Model {
 
     @HasMany(() => Session)
     sessions: Session[];
+
+    @HasMany(() => TimeSlot)
+    timeSlots: TimeSlot[];
+
+    @HasMany(() => Service)
+    services: Service[];
+
+    @HasMany(() => Booking)
+    bookings: Booking[];
 
 }
