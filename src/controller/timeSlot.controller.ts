@@ -11,9 +11,9 @@ export class TimeSlotController {
         this.logger = new APILogger();
     }
 
-    async getTimeSlotsByWeek(userId: string, fromDate: string, toDate: string) {
-        this.logger.info(`controller: getTimeSlotsByWeek(userId: ${userId})`,{fromDate: fromDate, toDate: toDate});
-        return await this.timeSlotService.getTimeSlotsByWeek(userId, fromDate, toDate);
+    async getTimeSlotsByDateInterval(userId: number, fromDate: string, toDate: string) {
+        this.logger.info(`controller: getTimeSlotsByDateInterval(userId: ${userId})`,{fromDate: fromDate, toDate: toDate});
+        return await this.timeSlotService.getTimeSlotsByDateInterval(userId, fromDate, toDate);
     }
 
     async getTimeSlotsByDay(userId: string, date: string) {

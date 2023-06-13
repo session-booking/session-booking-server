@@ -8,8 +8,8 @@ export class TimeSlotService {
         this.timeSlotRepository = new TimeSlotRepository();
     }
 
-    async getTimeSlotsByWeek(userId: string, fromDate: string, toDate: string) {
-        return await this.timeSlotRepository.getTimeSlotsByWeek(userId, fromDate, toDate);
+    async getTimeSlotsByDateInterval(userId: number, fromDate: string, toDate: string) {
+        return await this.timeSlotRepository.getTimeSlotsByDateInterval(userId, fromDate, toDate);
     }
 
     async getTimeSlotsByDay(userId: string, date: string) {

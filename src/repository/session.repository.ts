@@ -14,7 +14,7 @@ export class SessionRepository {
         this.sessionRepository = this.db.sequelize.getRepository(Session)
     }
 
-    async getSessions(userId: number, fromDate: string, toDate: string) {
+    async getSessionsByDateInterval(userId: number, fromDate: string, toDate: string) {
         try {
             const from = new Date(fromDate);
             const to = new Date(toDate);
@@ -24,6 +24,28 @@ export class SessionRepository {
                     userId: userId,
                     date: {
                         [Op.between]: [from, to]
+                    }
+                }
+            });
+
+            this.logger.info('sessions:::', sessions);
+            return sessions;
+        } catch (error) {
+            this.logger.error('error::' + error, null);
+            return [];
+        }
+    }
+
+    async getSessionsByDay(userId: string, date: string) {
+        try {
+            const startDateString = `${date}T00:00:00.000Z`;
+            const endDateString = `${date}T23:59:59.999Z`;
+
+            const sessions = await this.sessionRepository.findAll({
+                where: {
+                    userId: userId,
+                    date: {
+                        [Op.between]: [startDateString, endDateString]
                     }
                 }
             });
@@ -47,17 +69,25 @@ export class SessionRepository {
     }
 
     async updateSession(session: Session) {
-        let data = {};
         try {
-            data = await this.sessionRepository.update({...session}, {
+            const data = await this.sessionRepository.update({...session}, {
                 where: {
                     id: session.id,
                 }
             });
+
+            if (data !== null && data.length > 0 && data[0] === 1) {
+                return await this.sessionRepository.findOne({
+                    where: {
+                        id: session.id,
+                    }
+                });
+            } else {
+                return {};
+            }
         } catch (error) {
             this.logger.error('error::' + error, null);
         }
-        return data;
     }
 
     async deleteSession(sessionId: string) {

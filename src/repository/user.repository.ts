@@ -122,17 +122,21 @@ export class UserRepository {
     }
 
     async updateUser(user: User) {
-        let data = {};
         try {
-            data = await this.userRepository.update({...user}, {
+            const data = await this.userRepository.update({...user}, {
                 where: {
                     id: user.id,
                 }
             });
+
+            if (data !== null && data.length > 0 && data[0] === 1) {
+                return await this.getUser(user.id);
+            } else {
+                return {};
+            }
         } catch (error) {
             this.logger.error('error::' + error, null);
         }
-        return data;
     }
 
     async deleteUser(userId: string) {

@@ -8,8 +8,16 @@ export class BookingService {
         this.bookingRepository = new BookingRepository();
     }
 
+    async getAllUserBookings(userId: number) {
+        return await this.bookingRepository.getAllUserBookings(userId);
+    }
+
     async getBookingsByDay(userId: string, date: string) {
         return await this.bookingRepository.getBookingsByDay(userId, date);
+    }
+
+    async updateBooking(booking: Booking) {
+        return await this.bookingRepository.updateBooking(booking);
     }
 
     async createBooking(booking: Booking) {

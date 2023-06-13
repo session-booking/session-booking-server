@@ -8,8 +8,12 @@ export class SessionService {
         this.sessionRepository = new SessionRepository();
     }
 
-    async getSessions(userId: number, fromDate: string, toDate: string) {
-        return await this.sessionRepository.getSessions(userId, fromDate, toDate);
+    async getSessionsByDateInterval(userId: number, fromDate: string, toDate: string) {
+        return await this.sessionRepository.getSessionsByDateInterval(userId, fromDate, toDate);
+    }
+
+    async getSessionsByDay(userId: string, date: string) {
+        return await this.sessionRepository.getSessionsByDay(userId, date);
     }
 
     async createSession(session: Session) {

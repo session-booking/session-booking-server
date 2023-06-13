@@ -8,11 +8,11 @@ const router = Router();
 const timeSlotController = new TimeSlotController();
 const logger = new APILogger();
 
-router.get('/api/timeSlots/week/:userId', (req, res) => {
-    const userId = req.params.userId;
+router.get('/api/timeSlots/interval', verifyToken, (req: CustomRequest, res) => {
+    const userId = req.userId;
     const fromDate = req.query.from as string;
     const toDate = req.query.to as string;
-    timeSlotController.getTimeSlotsByWeek(userId, fromDate, toDate).then((data) => res.json(data));
+    timeSlotController.getTimeSlotsByDateInterval(userId, fromDate, toDate).then((data) => res.json(data));
 });
 
 router.get('/api/timeSlots/day/:userId', (req, res) => {

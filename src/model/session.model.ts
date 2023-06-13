@@ -13,15 +13,6 @@ export class Session extends Model {
         this.setDataValue("date", value);
     }
 
-    @Column({field: 'open'})
-    get open(): boolean {
-        return this.getDataValue("open");
-    }
-
-    set open(value: boolean) {
-        this.setDataValue("open", value);
-    }
-
     @Column({field: 'start_time'})
     get startTime(): string {
         return this.getDataValue("startTime");

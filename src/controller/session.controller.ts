@@ -11,9 +11,14 @@ export class SessionController {
         this.logger = new APILogger();
     }
 
-    async getSessions(userId: number, fromDate: string, toDate: string) {
-        this.logger.info(`controller: getSessions(userId: ${userId})`, {fromDate: fromDate, toDate: toDate});
-        return await this.sessionService.getSessions(userId, fromDate, toDate);
+    async getSessionsByDateInterval(userId: number, fromDate: string, toDate: string) {
+        this.logger.info(`controller: getSessionsByDateInterval(userId: ${userId})`, {fromDate: fromDate, toDate: toDate});
+        return await this.sessionService.getSessionsByDateInterval(userId, fromDate, toDate);
+    }
+
+    async getSessionsByDay(userId: string, date: string) {
+        this.logger.info(`controller: getSessionsByDay(userId: ${userId})`, {date: date});
+        return await this.sessionService.getSessionsByDay(userId, date);
     }
 
     async createSession(session: Session) {

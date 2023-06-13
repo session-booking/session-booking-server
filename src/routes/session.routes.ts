@@ -8,11 +8,17 @@ const router = Router();
 const sessionController = new SessionController();
 const logger = new APILogger();
 
-router.get('/api/sessions', verifyToken, (req: CustomRequest, res) => {
+router.get('/api/sessions/interval', verifyToken, (req: CustomRequest, res) => {
     const userId = req.userId;
     const fromDate = req.query.from as string;
     const toDate = req.query.to as string;
-    sessionController.getSessions(userId, fromDate, toDate).then((data) => res.json(data));
+    sessionController.getSessionsByDateInterval(userId, fromDate, toDate).then((data) => res.json(data));
+});
+
+router.get('/api/sessions/day/:userId', (req, res) => {
+    const userId = req.params.userId;
+    const date = req.query.date as string;
+    sessionController.getSessionsByDay(userId, date).then((data) => res.json(data));
 });
 
 router.post('/api/session', verifyToken, (req: CustomRequest, res) => {

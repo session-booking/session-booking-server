@@ -14,7 +14,7 @@ export class TimeSlotRepository {
         this.timeSlotRepository = this.db.sequelize.getRepository(TimeSlot);
     }
 
-    async getTimeSlotsByWeek(userId: string, fromDate: string, toDate: string) {
+    async getTimeSlotsByDateInterval(userId: number, fromDate: string, toDate: string) {
         try {
             const from = new Date(fromDate);
             const to = new Date(toDate);

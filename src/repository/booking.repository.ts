@@ -14,6 +14,22 @@ export class BookingRepository {
         this.bookingRepository = this.db.sequelize.getRepository(Booking)
     }
 
+    async getAllUserBookings(userId: number) {
+        try {
+            const bookings = await this.bookingRepository.findAll({
+                where: {
+                    userId: userId
+                }
+            });
+
+            this.logger.info('bookings:::', bookings);
+            return bookings;
+        } catch (error) {
+            this.logger.error('error::' + error, null);
+            return [];
+        }
+    }
+
     async getBookingsByDay(userId: string, date: string) {
         try {
             const startDateString = `${date}T00:00:00.000Z`;
@@ -44,6 +60,28 @@ export class BookingRepository {
             this.logger.error('error::' + error, null);
         }
         return data;
+    }
+
+    async updateBooking(booking: Booking) {
+        try {
+            const data = await this.bookingRepository.update({...booking}, {
+                where: {
+                    id: booking.id,
+                }
+            });
+
+            if (data !== null && data.length > 0 && data[0] === 1) {
+                return await this.bookingRepository.findOne({
+                    where: {
+                        id: booking.id
+                    }
+                });
+            } else {
+                return {};
+            }
+        } catch (error) {
+            this.logger.error('error::' + error, null);
+        }
     }
 
     async deleteBooking(bookingId: string) {
