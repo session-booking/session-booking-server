@@ -9,7 +9,13 @@ const serviceController = new ServiceController();
 const logger = new APILogger();
 
 router.get('/api/services/:userId', (req, res) => {
-    serviceController.getServices(req.params.userId).then((data) => res.json(data));
+    serviceController
+        .getServices(req.params.userId)
+        .then((data) => res.json(data))
+        .catch((error) => {
+            logger.error('error::' + error, null);
+            res.status(500).json({message: error.message});
+        });
 });
 
 router.post('/api/service', verifyToken, (req: CustomRequest, res) => {
@@ -26,7 +32,7 @@ router.post('/api/service', verifyToken, (req: CustomRequest, res) => {
         });
 });
 
-router.delete('/api/service/:id', verifyToken, (req: CustomRequest, res) => {
+router.delete('/api/service/:id', verifyToken, (req, res) => {
     serviceController
         .deleteService(req.params.id)
         .then((data) => res.json(data))

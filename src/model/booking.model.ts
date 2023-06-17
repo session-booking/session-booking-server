@@ -96,7 +96,10 @@ export class Booking extends Model {
         this.setDataValue('timeSlotId', value);
     }
 
-    @BelongsTo(() => TimeSlot)
+    @BelongsTo(() => TimeSlot, {
+        onDelete: "CASCADE",
+        hooks: true
+    })
     timeSlot: TimeSlot;
 
 }

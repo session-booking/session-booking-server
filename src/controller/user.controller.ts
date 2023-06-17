@@ -26,12 +26,12 @@ export class UserController {
         return await this.userService.getUser(userId);
     }
 
-    async updateUser(user: User) {
+    async updateUser(user: any) {
         this.logger.info('controller: updateUser', user);
         return await this.userService.updateUser(user);
     }
 
-    async deleteUser(userId: string) {
+    async deleteUser(userId: number) {
         this.logger.info(`controller: deleteUser(userId: ${userId})`, null);
         return await this.userService.deleteUser(userId);
     }

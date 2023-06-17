@@ -12,13 +12,25 @@ router.get('/api/timeSlots/interval', verifyToken, (req: CustomRequest, res) => 
     const userId = req.userId;
     const fromDate = req.query.from as string;
     const toDate = req.query.to as string;
-    timeSlotController.getTimeSlotsByDateInterval(userId, fromDate, toDate).then((data) => res.json(data));
+    timeSlotController
+        .getTimeSlotsByDateInterval(userId, fromDate, toDate)
+        .then((data) => res.json(data))
+        .catch((error) => {
+            logger.error('error::' + error, null);
+            res.status(500).json({message: error.message});
+        });
 });
 
 router.get('/api/timeSlots/day/:userId', (req, res) => {
     const userId = req.params.userId;
     const date = req.query.date as string;
-    timeSlotController.getTimeSlotsByDay(userId, date).then((data) => res.json(data));
+    timeSlotController
+        .getTimeSlotsByDay(userId, date)
+        .then((data) => res.json(data))
+        .catch((error) => {
+            logger.error('error::' + error, null);
+            res.status(500).json({message: error.message});
+        });
 });
 
 router.post('/api/timeSlot', verifyToken, (req: CustomRequest, res) => {

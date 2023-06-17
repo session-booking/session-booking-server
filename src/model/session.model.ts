@@ -40,6 +40,15 @@ export class Session extends Model {
         this.setDataValue("clientEmail", value);
     }
 
+    @Column({field: 'client_phone'})
+    get clientPhone(): string {
+        return this.getDataValue("clientPhone");
+    }
+
+    set clientPhone(value: string) {
+        this.setDataValue("clientPhone", value);
+    }
+
     @Column({field: 'client_name'})
     get clientName(): string {
         return this.getDataValue("clientName");
@@ -68,7 +77,10 @@ export class Session extends Model {
         this.setDataValue('userId', value);
     }
 
-    @BelongsTo(() => User)
+    @BelongsTo(() => User, {
+        onDelete: "CASCADE",
+        hooks: true
+    })
     user: User;
 
 }

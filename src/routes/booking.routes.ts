@@ -12,29 +12,33 @@ const logger = new APILogger();
 
 router.get('/api/bookings', verifyToken, (req: CustomRequest, res: Response) => {
     const userId = req.userId;
-    bookingController.getAllUserBookings(userId).then((data) => res.json(data));
+    bookingController
+        .getAllUserBookings(userId)
+        .then((data) => res.json(data))
+        .catch((error) => {
+            logger.error('error::' + error, null);
+            res.status(500).json({message: error.message});
+        });
 });
 
 router.get('/api/bookings/day/:userId', (req, res) => {
     const userId = req.params.userId;
     const date = req.query.date as string;
-    bookingController.getBookingsByDay(userId, date).then((data) => res.json(data));
-});
-
-router.put('/api/booking', verifyToken, (req: CustomRequest, res) => {
-    const booking = req.body.booking;
-    bookingController.updateBooking(booking).then((data) => res.json(data));
+    bookingController
+        .getBookingsByDay(userId, date)
+        .then((data) => res.json(data))
+        .catch((error) => {
+            logger.error('error::' + error, null);
+            res.status(500).json({message: error.message});
+        });
 });
 
 router.post('/api/booking', (req: IoRequest, res: Response) => {
-    let booking = req.body.booking;
-    const io = req.io;
-
     bookingController
-        .createBooking(booking)
+        .createBooking(req.body.booking)
         .then((data) => {
             if (data instanceof Booking) {
-                io.emit(`booking-update-${data.userId}`, data);
+                req.io.emit(`booking-update-${data.userId}`, data);
             }
             res.json(data);
         })
@@ -44,7 +48,17 @@ router.post('/api/booking', (req: IoRequest, res: Response) => {
         });
 });
 
-router.delete('/api/booking/:id', (req, res) => {
+router.put('/api/booking', verifyToken, (req, res) => {
+    bookingController
+        .updateBooking(req.body.booking)
+        .then((data) => res.json(data))
+        .catch((error) => {
+            logger.error('error::' + error, null);
+            res.status(500).json({message: error.message});
+        });
+});
+
+router.delete('/api/booking/:id', verifyToken, (req, res) => {
     bookingController
         .deleteBooking(req.params.id)
         .then((data) => res.json(data))

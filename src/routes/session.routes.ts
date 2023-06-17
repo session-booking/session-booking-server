@@ -12,13 +12,25 @@ router.get('/api/sessions/interval', verifyToken, (req: CustomRequest, res) => {
     const userId = req.userId;
     const fromDate = req.query.from as string;
     const toDate = req.query.to as string;
-    sessionController.getSessionsByDateInterval(userId, fromDate, toDate).then((data) => res.json(data));
+    sessionController
+        .getSessionsByDateInterval(userId, fromDate, toDate)
+        .then((data) => res.json(data))
+        .catch((error) => {
+            logger.error('error::' + error, null);
+            res.status(500).json({message: error.message});
+        });
 });
 
 router.get('/api/sessions/day/:userId', (req, res) => {
     const userId = req.params.userId;
     const date = req.query.date as string;
-    sessionController.getSessionsByDay(userId, date).then((data) => res.json(data));
+    sessionController
+        .getSessionsByDay(userId, date)
+        .then((data) => res.json(data))
+        .catch((error) => {
+            logger.error('error::' + error, null);
+            res.status(500).json({message: error.message});
+        });
 });
 
 router.post('/api/session', verifyToken, (req: CustomRequest, res) => {

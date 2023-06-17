@@ -2,6 +2,8 @@ import {Router} from 'express';
 import jwt from 'jsonwebtoken';
 import {UserController} from "../controller/user.controller";
 import {APILogger} from "../logger/api.logger";
+import {CustomRequest} from "../interface/customRequest";
+import {verifyToken} from "../middleware/verifyToken";
 
 const router = Router();
 const userController = new UserController();
@@ -70,6 +72,30 @@ router.get('/api/user', (req, res) => {
                 res.status(500).json({message: error.message});
             });
     });
+});
+
+router.put('/api/user', verifyToken, (req: CustomRequest, res) => {
+    const userId = req.userId;
+    let userData = req.body.userData;
+
+    userData.id = userId;
+    userController
+        .updateUser(userData)
+        .then((data) => res.json(data))
+        .catch((error) => {
+            logger.error('error::' + error, null);
+            res.status(500).json({message: error.message});
+        });
+});
+
+router.delete('/api/user', verifyToken, (req: CustomRequest, res) => {
+    userController
+        .deleteUser(req.userId)
+        .then((data) => res.json(data))
+        .catch((error) => {
+            logger.error('error::' + error, null);
+            res.status(500).json({message: error.message});
+        });
 });
 
 router.get('/api/user/:userId', (req, res) => {

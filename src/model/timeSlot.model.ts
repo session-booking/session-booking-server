@@ -41,7 +41,10 @@ export class TimeSlot extends Model {
         this.setDataValue('userId', value);
     }
 
-    @BelongsTo(() => User)
+    @BelongsTo(() => User, {
+        onDelete: "CASCADE",
+        hooks: true
+    })
     user: User;
 
 }

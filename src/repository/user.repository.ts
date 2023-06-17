@@ -121,9 +121,23 @@ export class UserRepository {
         }
     }
 
-    async updateUser(user: User) {
+    async updateUser(user: any) {
         try {
-            const data = await this.userRepository.update({...user}, {
+            let updateData: any = {};
+
+            if (user.username !== null && user.username !== undefined && user.username !== '') {
+                updateData.username = user.username;
+            }
+
+            if (user.password !== null && user.password !== undefined && user.password !== '') {
+                updateData.password = user.password;
+            }
+
+            if (user.phoneNumber !== null && user.phoneNumber !== undefined && user.phoneNumber !== '') {
+                updateData.phoneNumber = user.phoneNumber;
+            }
+
+            const data = await this.userRepository.update(updateData, {
                 where: {
                     id: user.id,
                 }
@@ -139,7 +153,7 @@ export class UserRepository {
         }
     }
 
-    async deleteUser(userId: string) {
+    async deleteUser(userId: number) {
         let data = {};
         try {
             data = await this.userRepository.destroy({

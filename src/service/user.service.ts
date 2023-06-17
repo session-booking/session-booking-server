@@ -20,11 +20,11 @@ export class UserService {
         return await this.userRepository.getUser(userId);
     }
 
-    async updateUser(user: User) {
+    async updateUser(user: any) {
         return await this.userRepository.updateUser(user);
     }
 
-    async deleteUser(userId: string) {
+    async deleteUser(userId: number) {
         return await this.userRepository.deleteUser(userId);
     }
 
