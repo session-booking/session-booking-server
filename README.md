@@ -1,2 +1,2 @@
-# session-booking-server
-Backend module...
+# Session Schedule (server)
+The Server Module of Session Schedule facilitates service providers in registering and managing sessions. It provides an overview of booked sessions on a calendar UI. Service providers can create sessions, share a URL or QR code for clients to book sessions. Requests for bookings can then be accepted or canceled by the service provider. The app is deployed at https://www.sessionschedule.com/.
